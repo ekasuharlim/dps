@@ -1,3 +1,3 @@
 Test file nih
 $test = "Test string"
-Write-Output $test | Add-Content -LiteralPath \\STSGAPP00134\pcrecosh$\import\output[1].txt
+Write-Output $test | Add-Content -LiteralPath \\stsgapp00134\Test\Test.txt
