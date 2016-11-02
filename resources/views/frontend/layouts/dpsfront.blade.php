@@ -53,7 +53,7 @@
 				<a href="#" data-toggle="dropdown" class="dropdown-toggle">Proposal<b class="caret"></b></a>			  				
                 <ul class="dropdown-menu">
                   <li><a href="#">Download form</a></li>
-                  <li><a href="#">Submit Form</a></li>
+                  <li><a href="/uploadentry">Submit Form</a></li>
                 </ul>				
 			  </li>			  
               <li>
