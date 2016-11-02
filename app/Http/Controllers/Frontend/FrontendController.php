@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Mail;
+use Input;
+use ZipArchive;
 /**
  * Class FrontendController
  * @package App\Http\Controllers
@@ -31,11 +33,29 @@ class FrontendController extends Controller
 
 	public function submitproposal(Request $request)
 	{
-		Mail::send('emails.submitproposal', ['request' => $request], function ($m) {
+		
+		$destFolder = 'C:\\Users\\Developer\\';
+		$fileName = 'tstfile_'. Input::get('OrganisationName').'_test.txt';
+		Input::file('FileName')->move($destFolder, $fileName); // uploading file to given path
+		
+		$zip = new ZipArchive();
+		$zipFilename = $destFolder.'zipfile_'. Input::get('OrganisationName'). 'test.zip';		
+		if ($zip->open($zipFilename, ZipArchive::CREATE)!==TRUE) {
+			return("cannot open zipFilename");
+		}		
+		$zip->addFile('C:\\Users\\Developer\\testfile.txt');				
+		$zip->addFile($destFolder.$fileName);				
+		$zip->close();
+				
+		$data = array( 'filePath' => $zipFilename);		
+		Mail::send('emails.submitproposal', $data, function ($m) use ($data) {
 			$m->from('hello@app.com', 'Your Application');
 			$m->to('eka.suharlim@gmail.com', 'Eka Suharlim')->subject('Your Reminder!');
+			$m->attach($data['filePath']);			 
 		});		
-		return "proposal submited" . $request->input('OrganisationName');
+		
+		
+		return 'proposal submited ' .' saved' ;
 	}
 
 	/**
