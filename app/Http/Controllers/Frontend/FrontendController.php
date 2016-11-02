@@ -34,7 +34,7 @@ class FrontendController extends Controller
 	public function submitproposal(Request $request)
 	{
 		
-		$destFolder = 'C:\\Users\\Developer\\';
+		$destFolder = '\var\www\';
 		$fileName = 'tstfile_'. Input::get('OrganisationName').'_test.txt';
 		Input::file('FileName')->move($destFolder, $fileName); // uploading file to given path
 		
@@ -43,7 +43,6 @@ class FrontendController extends Controller
 		if ($zip->open($zipFilename, ZipArchive::CREATE)!==TRUE) {
 			return("cannot open zipFilename");
 		}		
-		$zip->addFile('C:\\Users\\Developer\\testfile.txt');				
 		$zip->addFile($destFolder.$fileName);				
 		$zip->close();
 				
