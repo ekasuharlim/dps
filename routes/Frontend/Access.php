@@ -23,7 +23,9 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 	 * These routes require no user to be logged in
 	 */
 	Route::group(['middleware' => 'guest'], function () {
+		//Disable route not used in phase 1 20161102
 		// Authentication Routes
+		/*
 		Route::get('login', 'LoginController@showLoginForm')->name('login');
 		Route::post('login', 'LoginController@login')->name('login');
 
@@ -44,5 +46,6 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 
 		Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset_form');
 		Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
+		*/
 	});
 });

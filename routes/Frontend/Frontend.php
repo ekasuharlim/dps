@@ -5,7 +5,9 @@
  * All route names are prefixed with 'frontend.'
  */
 Route::get('/', 'FrontendController@index')->name('index');
-Route::get('macros', 'FrontendController@macros')->name('macros');
+Route::get('/about', 'FrontendController@about')->name('about');
+
+//Route::get('macros', 'FrontendController@macros')->name('macros');
 
 /**
  * These frontend controllers require the user to be logged in

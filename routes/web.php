@@ -6,8 +6,13 @@
  */
 
 // Switch between the included languages
+Route::get('/', 'GotoController@home');
 Route::get('lang/{lang}', 'LanguageController@swap');
+Route::get('goto', 'GotoController@home');
+Route::get('goto/home', 'GotoController@home');
 
+
+	
 /* ----------------------------------------------------------------------- */
 
 /**
