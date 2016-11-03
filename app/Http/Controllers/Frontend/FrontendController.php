@@ -34,17 +34,22 @@ class FrontendController extends Controller
 	public function submitproposal(Request $request)
 	{
 		
-		$destFolder = '\var\www\';
+		$destFolder = env('ZIPFILE_FOLDER');
+		$password = env('ZIPFILE_PASSWORD');
 		$fileName = 'tstfile_'. Input::get('OrganisationName').'_test.txt';
 		Input::file('FileName')->move($destFolder, $fileName); // uploading file to given path
 		
-		$zip = new ZipArchive();
+		$sourceFileName = $destFolder.$fileName;
 		$zipFilename = $destFolder.'zipfile_'. Input::get('OrganisationName'). 'test.zip';		
-		if ($zip->open($zipFilename, ZipArchive::CREATE)!==TRUE) {
-			return("cannot open zipFilename");
-		}		
-		$zip->addFile($destFolder.$fileName);				
-		$zip->close();
+		
+		@system("zip -P $password $zipFilename $sourceFileName -q -j");
+		// $zip = new ZipArchive();
+		// if ($zip->open($zipFilename, ZipArchive::CREATE)!==TRUE) {
+			// return("cannot open zipFilename");
+		// }				
+		// $zip->setPassword(env('ZIPFILE_PASSWORD'));
+		// $zip->addFile($destFolder.$fileName,$fileName);				
+		// $zip->close();
 				
 		$data = array( 'filePath' => $zipFilename);		
 		Mail::send('emails.submitproposal', $data, function ($m) use ($data) {
@@ -53,6 +58,7 @@ class FrontendController extends Controller
 			$m->attach($data['filePath']);			 
 		});		
 		
+		unlink($destFolder.$fileName);
 		
 		return 'proposal submited ' .' saved' ;
 	}
