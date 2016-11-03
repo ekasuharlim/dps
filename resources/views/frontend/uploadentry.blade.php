@@ -1,7 +1,6 @@
 @extends('frontend.layouts.dpsfront')
 @section('content')
     <section>  
-	  Test upload 2
       <div id="contact" class="container">
         <div class="row">
           <div class="col-lg-7 col-lg-offset-1">
@@ -17,7 +16,7 @@
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label>Proposal File (pdf)</label>
-                    {!! Form::file('FileName') !!}
+                    {!! Form::file('UploadedFile') !!}
                   </div>
                 </div>
 				

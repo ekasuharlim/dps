@@ -7,7 +7,8 @@
 Route::get('/', 'FrontendController@index')->name('index');
 Route::get('/about', 'FrontendController@about')->name('about');
 Route::get('/uploadentry', 'FrontendController@uploadEntry')->name('uploadentry');
-Route::post('/submitproposal', 'FrontendController@submitproposal')->name('submitproposal');
+Route::post('/submitproposal', 'FrontendController@submitProposal')->name('submitproposal');
+Route::get('/submitsuccess', 'FrontendController@submitSuccess')->name('submitsuccess');
 
 //Route::get('macros', 'FrontendController@macros')->name('macros');
 

@@ -71,7 +71,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <p>&copy;2016 Best company</p>
+              <p>&copy;2016</p>
             </div>
             <div class="col-md-6">
               <p class="credit">Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a></p>
