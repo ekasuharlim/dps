@@ -1,6 +1,7 @@
 @extends('frontend.layouts.dpsfront')
 @section('content')
     <section>  
+	  Test upload 2
       <div id="contact" class="container">
         <div class="row">
           <div class="col-lg-7 col-lg-offset-1">
