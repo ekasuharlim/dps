@@ -50,12 +50,10 @@ class FrontendController extends Controller
 					'theme' => 'required|max:300',
 					'proposal_file' => 'file|mimes:txt'		
 				);
-				
-		
-		$validator = Validator::make($data, $rules);
+		$validator = Validator::make($data,$rules);		
 		if ($validator->fails())
 		{
-			return redirect()->route('frontend.uploadentry')->withErrors($validator);
+			return redirect()->route('frontend.uploadentry')->withErrors($validator)->withInput();
 		}		
 		/*
 		$destFolder = env('ZIPFILE_FOLDER');
