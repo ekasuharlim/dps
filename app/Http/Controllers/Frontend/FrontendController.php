@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Proposal;
+
 use Illuminate\Http\Request;
 use Mail;
 use Input;
@@ -11,6 +13,7 @@ use DateTime;
 use DateTimeZone;
 use File;
 use Validator;
+
 /**
  * Class FrontendController
  * @package App\Http\Controllers
@@ -55,12 +58,13 @@ class FrontendController extends Controller
 		{
 			return redirect()->route('frontend.uploadentry')->withErrors($validator)->withInput();
 		}		
-		/*
+		
+		
 		$destFolder = env('ZIPFILE_FOLDER');
 		$password = env('ZIPFILE_PASSWORD');		
 		$currentDate = new DateTime('now',new DateTimeZone('Asia/Singapore'));		
-		$fileExt = strtoupper(Input::file('UploadedFile')->getClientOriginalExtension());
-		$fileName = strtoupper(sprintf('SFC_%s_%s_FILE.%s',substr(Input::get('OrganisationName'),0,3),$currentDate->format('Ymd_His'),$fileExt));		
+		$fileExt = strtoupper(Input::file('proposal_file')->getClientOriginalExtension());
+		$fileName = strtoupper(sprintf('SFC_%s_%s_FILE.%s',substr($data['organisation_name'],0,3),$currentDate->format('Ymd_His'),$fileExt));		
 		$zipFilename = $destFolder.str_replace('.'.$fileExt,'.zip',$fileName);		 
 		
 		$sourceFileName = $destFolder.$fileName;
@@ -68,16 +72,16 @@ class FrontendController extends Controller
 			File::delete($sourceFileName);
 		}
 		
-		Input::file('UploadedFile')->move($destFolder, $fileName); // uploading file to zip folder
+		Input::file('proposal_file')->move($destFolder, $fileName); // uploading file to zip folder
 				
 		if(File::exists($sourceFileName)){			
 			@system("zip -P $password $zipFilename $sourceFileName -q -j");
 			if(File::exists($zipFilename)){			
-				$data = array( 'filePath' => $zipFilename);		
-				Mail::send('emails.submitproposal', $data, function ($m) use ($data) {
+				$emailData = array( 'filePath' => $zipFilename);		
+				Mail::send('emails.submitproposal', $emailData, function ($m) use ($emailData) {
 					$m->from('hello@app.com', 'Your Application');
 					$m->to('eka.suharlim@gmail.com', 'Eka Suharlim')->subject('Your Reminder!');
-					$m->attach($data['filePath']);			 
+					$m->attach($emailData['filePath']);			 
 				});					
 			}else{
 				return 'File zip upload fails, please try again';
@@ -86,7 +90,15 @@ class FrontendController extends Controller
 		}else{
 			return 'File upload fails, please try again';
 		}
-		*/
+		
+		$proposal = new Proposal;
+        $proposal->origanisation_name= $data['organisation_name'];
+        $proposal->contact_name= $data['contact_name'];
+        $proposal->theme= $data['theme'];
+		$proposal->file_name= $zipFilename;
+		$proposal->ip_addr= $request->ip();
+        $proposal->save();
+		
 		return redirect()->route('frontend.submitsuccess');
 	}
 	
