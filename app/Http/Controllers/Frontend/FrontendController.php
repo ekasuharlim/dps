@@ -10,6 +10,7 @@ use ZipArchive;
 use DateTime;
 use DateTimeZone;
 use File;
+use Validator;
 /**
  * Class FrontendController
  * @package App\Http\Controllers
@@ -37,6 +38,26 @@ class FrontendController extends Controller
 	public function submitProposal(Request $request)
 	{
 		set_time_limit(300);
+		$data = array(
+					'organisation_name' => Input::get('organisation_name'),
+					'contact_name' => Input::get('contact_name'),
+					'theme' => Input::get('theme'),
+					'proposal_file' => Input::file('proposal_file'),					
+				);
+		$rules = array(
+					'organisation_name' => 'required|max:200',
+					'contact_name' => 'required|max:200',
+					'theme' => 'required|max:300',
+					'proposal_file' => 'file|mimes:txt'		
+				);
+				
+		
+		$validator = Validator::make($data, $rules);
+		if ($validator->fails())
+		{
+			return redirect()->route('frontend.uploadentry')->withErrors($validator);
+		}		
+		/*
 		$destFolder = env('ZIPFILE_FOLDER');
 		$password = env('ZIPFILE_PASSWORD');		
 		$currentDate = new DateTime('now',new DateTimeZone('Asia/Singapore'));		
@@ -67,6 +88,7 @@ class FrontendController extends Controller
 		}else{
 			return 'File upload fails, please try again';
 		}
+		*/
 		return redirect()->route('frontend.submitsuccess');
 	}
 	
