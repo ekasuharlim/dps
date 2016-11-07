@@ -5,7 +5,7 @@
       <div class="container">
         <div class="breadcrumbs">
           <ul class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li>About SFC Asia</li>
           </ul>
         </div>

@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-lg-8">
             <div class="post-content">
-				<center><p>Submit success</p></center>
+				<center><p><font color='green'>You propopsal has been submitted</font></p></center>
 			</div>
 		  </div>
 		</div>
