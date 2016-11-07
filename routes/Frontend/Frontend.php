@@ -7,6 +7,34 @@
 Route::get('/', 'FrontendController@index')->name('index');
 Route::get('/about', 'FrontendController@about')->name('about');
 Route::get('/uploadentry', 'FrontendController@uploadEntry')->name('uploadentry');
+Route::get('/themes', 'FrontendController@themes')->name('themes');
+Route::get('/funding', 'FrontendController@funding')->name('funding');
+Route::get('/process', 'FrontendController@process')->name('process');
+Route::get('/contact', 'FrontendController@contact')->name('contact');
+Route::get('/disclaimer', 'FrontendController@disclaimer')->name('disclaimer');
+Route::get('/downloadform', 'FrontendController@downloadform')->name('downloadform');
+
+Route::get('/download/{filename}', function($filename)
+{
+    // Check if file exists in app/storage/file folder
+    $file_path = storage_path() .'/file/'. $filename;
+    if (file_exists($file_path))
+    {
+        // Send Download
+        return Response::download($file_path, $filename, [
+            'Content-Length: '. filesize($file_path)
+        ]);
+    }
+    else
+    {
+        // Error
+		echo $file_path;
+        exit('Requested file does not exist on our server!');
+    }
+})
+->where('filename', '[A-Za-z0-9\-\_\.]+');
+
+
 Route::post('/submitproposal', 'FrontendController@submitProposal')->name('submitproposal');
 Route::get('/submitsuccess', 'FrontendController@submitSuccess')->name('submitsuccess');
 

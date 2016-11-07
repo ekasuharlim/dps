@@ -44,22 +44,22 @@
               <li class="dropdown">
 				<a href="#" data-toggle="dropdown" class="dropdown-toggle">What are we looking for? <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Sustainability themes</a></li>
-                  <li><a href="#">Funding Criteria</a></li>
-                  <li><a href="process.html">Assesment and funding process</a></li>
+                  <li><a href="/themes">Sustainability themes</a></li>
+                  <li><a href="/funding">Funding Criteria</a></li>
+                  <li><a href="/process">Assesment and funding process</a></li>
                 </ul>
               </li>
               <li class="dropdown">
 				<a href="#" data-toggle="dropdown" class="dropdown-toggle">Proposal<b class="caret"></b></a>			  				
                 <ul class="dropdown-menu">
-                  <li><a href="#">Download form</a></li>
+                  <li><a href="/downloadform">Download form</a></li>
                   <li><a href="/uploadentry">Submit Form</a></li>
                 </ul>				
 			  </li>			  
               <li>
-				<a href="contact.html">Contact Us</a>
+				<a href="/contact">Contact Us</a>
 			  </li>			  
-              <li><a href="contact.html">DISCLAIMER</a></li>			  			  
+              <li><a href="/disclaimer">DISCLAIMER</a></li>			  			  
             </ul>
           </div>
         </div>

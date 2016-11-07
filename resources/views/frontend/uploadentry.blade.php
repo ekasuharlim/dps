@@ -1,10 +1,21 @@
 @extends('frontend.layouts.dpsfront')
 @section('content')
+    <section class="background-gray-lightest">
+      <div class="container">
+        <div class="breadcrumbs">
+          <ul class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li>Submit Proposal</li>
+          </ul>
+        </div>
+        <h1 class="heading">Submit Proposal</h1>
+      </div>
+    </section>
+
     <section>  
       <div id="contact" class="container">
         <div class="row">
           <div class="col-lg-7 col-lg-offset-1">
-            <h4 class="heading margin-bottom">Submit Proposal</h4>
             <div class="row">			
                 <div class="col-sm-12">			
 					@if (count($errors) > 0)

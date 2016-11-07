@@ -103,8 +103,8 @@ header {
 }
 section {
   position: relative;
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 section.section--no-padding {
   padding-top: 0;

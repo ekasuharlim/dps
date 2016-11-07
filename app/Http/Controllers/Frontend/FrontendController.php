@@ -37,6 +37,37 @@ class FrontendController extends Controller
 	{
 		return view('frontend.uploadentry');
 	}
+	
+	public function themes()
+	{
+		return view('frontend.themes');
+	}
+
+	public function funding()
+	{
+		return view('frontend.funding');
+	}
+	
+	public function process()
+	{
+		return view('frontend.process');
+	}
+	
+	public function contact()
+	{
+		return view('frontend.contact');
+	}
+	
+	public function disclaimer()
+	{
+		return view('frontend.disclaimer');
+	}
+
+	public function downloadform()
+	{
+		return view('frontend.downloadform');
+	}
+	
 
 	public function submitProposal(Request $request)
 	{
