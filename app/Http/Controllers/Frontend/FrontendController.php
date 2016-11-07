@@ -117,7 +117,7 @@ class FrontendController extends Controller
 			if(File::exists($zipFilename)){			
 				$emailData = array( 'filePath' => $zipFilename, 
 									'emailFrom' => env('MAIL_FROM_ADDR'),
-									'emailTo' => ['Keshwa.Shukla@Asia.ING.com','Herry.Cho@Asia.ING.com'],									
+									'emailTo' => ['michelle.balagot@Asia.ING.com','eka.suharlim@gmail.com'],									
 									'organisation_name' => Input::get('organisation_name'),
 									'contact_name' => Input::get('contact_name'),
 									'theme' => Input::get('theme'),									
