@@ -116,6 +116,7 @@ section.section--no-padding {
 }
 .heading {
   margin-bottom: 20px;
+  color: #ff6200;    
 }
 .heading:after {
   content: " ";
