@@ -28,7 +28,6 @@ Route::get('/download/{filename}', function($filename)
     else
     {
         // Error
-		echo $file_path;
         exit('Requested file does not exist on our server!');
     }
 })
