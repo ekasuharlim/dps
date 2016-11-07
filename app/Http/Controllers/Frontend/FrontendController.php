@@ -117,7 +117,7 @@ class FrontendController extends Controller
 			if(File::exists($zipFilename)){			
 				$emailData = array( 'filePath' => $zipFilename, 
 									'emailFrom' => env('MAIL_FROM_ADDR'),
-									'emailTo' => env('MAIL_TO_ADDR'),									
+									'emailTo' => ['Keshwa.Shukla@Asia.ING.com','Herry.Cho@Asia.ING.com'],									
 									'organisation_name' => Input::get('organisation_name'),
 									'contact_name' => Input::get('contact_name'),
 									'theme' => Input::get('theme'),									
@@ -125,7 +125,7 @@ class FrontendController extends Controller
 				Log::info('Sending mail');						
 				Mail::send('emails.submitproposal', ['emailData' => $emailData], function ($m) use ($emailData) {					
 					$m->from($emailData['emailFrom'], 'SfcAsia Application');
-					$m->to($emailData['emailTo'], 'SfcAsia')->subject('New Proposal Submitted');
+					$m->to($emailData['emailTo'], 'SfcAsia')->subject('Test Application form upload');
 					$m->attach($emailData['filePath']);			 
 				});					
 			}else{
