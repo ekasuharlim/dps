@@ -17,7 +17,7 @@
         <div class="row">
           <div class="col-lg-8">
             <div class="post-content">
-			  <p>You can download the form by clicking this <a href="/download/formsample.txt">link</a></p>
+			  <p>You can download the form by clicking this <a href="/download/SfcAsiaForm.docx">link</a></p>
             </div>
           </div>
         </div>
