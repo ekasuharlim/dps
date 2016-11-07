@@ -35,7 +35,7 @@
         <div class="container">
           <div class="navbar-header">
 			  <a href="/" >
-					<img src="{{ URL::asset('img/logo.png') }}" height="80"/>
+					<img src="{{ URL::asset('img/logo.png') }}" height="120"/>
 			  </a>			  
           </div>
           <div id="navigation" class="collapse navbar-collapse navbar-right">
