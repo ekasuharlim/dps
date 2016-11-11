@@ -65,6 +65,7 @@
         </div>
       </div>
     </header>
+	<!-- 20161111 Eka Suharlim -->
 	@yield('content')
 	<footer class="footer">
       <div class="footer__copyright">
