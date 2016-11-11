@@ -95,7 +95,8 @@ class FrontendController extends Controller
 		
 		
 		$destFolder = env('ZIPFILE_FOLDER');
-		$password = env('ZIPFILE_PASSWORD');		
+		$password = env('ZIPFILE_PASSWORD');	
+		$emailTo = 	explode(',',env('SFC_RECIPIENT'));	
 		$currentDate = new DateTime('now',new DateTimeZone('Asia/Singapore'));		
 		$fileExt = strtoupper(Input::file('proposal_file')->getClientOriginalExtension());
 		$fileName = strtoupper(sprintf('SFC_%s_%s_FILE_%s',
@@ -117,7 +118,7 @@ class FrontendController extends Controller
 			if(File::exists($zipFilename)){			
 				$emailData = array( 'filePath' => $zipFilename, 
 									'emailFrom' => env('MAIL_FROM_ADDR'),
-									'emailTo' => ['michelle.balagot@Asia.ING.com','eka.suharlim@gmail.com'],									
+									'emailTo' => $emailTo,									
 									'organisation_name' => Input::get('organisation_name'),
 									'contact_name' => Input::get('contact_name'),
 									'theme' => Input::get('theme'),									
