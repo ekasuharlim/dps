@@ -48,7 +48,12 @@
                     <label valign='top'>Message*</label>
 					<textarea name="message" maxlength="1000" rows="5" cols="100">{{ old('message') }}</textarea>
                   </div>
-                </div>								
+                </div>	
+                <div class="col-sm-12">
+                  <div class="form-group">
+						{!! app('captcha')->display(); !!}				
+                  </div>
+                </div>					
                 <div class="col-sm-12">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

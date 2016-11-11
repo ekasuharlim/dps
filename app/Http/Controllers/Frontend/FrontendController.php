@@ -79,13 +79,15 @@ class FrontendController extends Controller
 					'organisation_name' => Input::get('organisation_name'),
 					'contact_name' => Input::get('contact_name'),
 					'theme' => Input::get('theme'),
-					'proposal_file' => Input::file('proposal_file'),					
+					'proposal_file' => Input::file('proposal_file'),
+					'not_a_robot_validation' => Input::get('g-recaptcha-response')					
 				);
 		$rules = array(
 					'organisation_name' => 'required|max:200',
 					'contact_name' => 'required|max:200',
 					'theme' => 'required|max:300',
-					'proposal_file' => 'file|mimes:pdf'		
+					'proposal_file' => 'file|mimes:pdf',
+					'not_a_robot_validation' => 'required|captcha'					
 				);
 		$validator = Validator::make($data,$rules);		
 		if ($validator->fails())
@@ -125,7 +127,7 @@ class FrontendController extends Controller
 								  );
 				Log::info('Sending mail');						
 				Mail::send('emails.submitproposal', ['emailData' => $emailData], function ($m) use ($emailData) {					
-					$m->from($emailData['emailFrom'], 'SfcAsia Application');
+					$m->from($emailData['emailFrom'], 'SfcAsia');
 					$m->to($emailData['emailTo'], 'SfcAsia')->subject('Test Application form upload');
 					$m->attach($emailData['filePath']);			 
 				});					
@@ -158,11 +160,13 @@ class FrontendController extends Controller
 					'contact_name' => Input::get('contact_name'),
 					'contact_email' => Input::get('contact_email'),
 					'message' => Input::get('message'),
+					'not_a_robot_validation' => Input::get('g-recaptcha-response')
 				);
 		$rules = array(
 					'contact_name' => 'required|max:200',
 					'contact_email' => 'required|max:200|email',
-					'message' => 'required|max:1000'
+					'message' => 'required|max:1000',
+					'not_a_robot_validation' => 'required|captcha'
 				);
 		$validator = Validator::make($data,$rules);		
 		if ($validator->fails())
@@ -176,10 +180,21 @@ class FrontendController extends Controller
 							'contact_email' => $data['contact_email'],
 							'message' => $data['message'],									
 						  );
-		Log::info('Sending mail');						
+		Log::info('Sending mail to sfcasia');						
 		Mail::send('emails.contactuscontent', ['emailData' => $emailData], function ($m) use ($emailData) {					
 			$m->from($emailData['contact_email'],$emailData['contact_name']);
 			$m->to($emailData['emailTo'], 'SfcAsia')->subject('New queries on SFC Asia');
+		});					
+
+		Log::info('Sending mail to requestor');						
+		$emailData = array( 'emailFrom' => env('MAIL_FROM_ADDR'),
+							'contact_name' => $data['contact_name'],
+							'contact_email' => $data['contact_email'],
+							'message' => $data['message'],									
+						  );		
+		Mail::send('emails.contactusnotif', ['emailData' => $emailData], function ($m) use ($emailData) {					
+			$m->from($emailData['emailFrom'],'SfcAsia');
+			$m->to($emailData['contact_email'], $emailData['contact_name'])->subject('Your queries to SFC Asia has been submitted');
 		});					
 		
 		Log::info('Submit Contact End');

@@ -14,7 +14,8 @@
         "hieu-le/active": "~2.0",
         "arcanedev/log-viewer": "~4.0",
         "arcanedev/no-captcha": "~3.0",
-        "yajra/laravel-datatables-oracle": "~6.0"
+        "yajra/laravel-datatables-oracle": "~6.0",
+		"anhskohbo/no-captcha" : "2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
