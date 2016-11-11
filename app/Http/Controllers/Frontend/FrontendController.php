@@ -151,6 +151,45 @@ class FrontendController extends Controller
 		return redirect()->route('frontend.submitsuccess');
 	}
 	
+	public function submitContact(Request $request){
+		Log::info('Submit Contact Start');
+		set_time_limit(300);
+		$data = array(
+					'contact_name' => Input::get('contact_name'),
+					'contact_email' => Input::get('contact_email'),
+					'message' => Input::get('message'),
+				);
+		$rules = array(
+					'contact_name' => 'required|max:200',
+					'contact_email' => 'required|max:200|email',
+					'message' => 'required|max:1000'
+				);
+		$validator = Validator::make($data,$rules);		
+		if ($validator->fails())
+		{
+			return redirect()->route('frontend.contact')->withErrors($validator)->withInput();
+		}		
+		$emailTo = 	explode(',',env('SFC_RECIPIENT'));	
+
+		$emailData = array( 'emailTo' => $emailTo,									
+							'contact_name' => $data['contact_name'],
+							'contact_email' => $data['contact_email'],
+							'message' => $data['message'],									
+						  );
+		Log::info('Sending mail');						
+		Mail::send('emails.contactuscontent', ['emailData' => $emailData], function ($m) use ($emailData) {					
+			$m->from($emailData['contact_email'],$emailData['contact_name']);
+			$m->to($emailData['emailTo'], 'SfcAsia')->subject('New queries on SFC Asia');
+		});					
+		
+		Log::info('Submit Contact End');
+		return redirect()->route('frontend.contactsuccess');
+
+	}
+	public function contactSuccess(){
+		return view('frontend.contactsuccess');		
+	}
+	
 	public function submitSuccess(){
 		return view('frontend.submitsuccess');		
 	}

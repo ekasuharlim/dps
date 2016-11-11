@@ -13,7 +13,10 @@ Route::get('/process', 'FrontendController@process')->name('process');
 Route::get('/contact', 'FrontendController@contact')->name('contact');
 Route::get('/disclaimer', 'FrontendController@disclaimer')->name('disclaimer');
 Route::get('/downloadform', 'FrontendController@downloadform')->name('downloadform');
-
+Route::post('/submitcontact', 'FrontendController@submitContact')->name('submitcontact');
+Route::post('/submitproposal', 'FrontendController@submitProposal')->name('submitproposal');
+Route::get('/submitsuccess', 'FrontendController@submitSuccess')->name('submitsuccess');
+Route::get('/contactsuccess', 'FrontendController@contactsuccess')->name('contactsuccess');
 Route::get('/download/{filename}', function($filename)
 {
     // Check if file exists in app/storage/file folder
@@ -34,8 +37,6 @@ Route::get('/download/{filename}', function($filename)
 ->where('filename', '[A-Za-z0-9\-\_\.]+');
 
 
-Route::post('/submitproposal', 'FrontendController@submitProposal')->name('submitproposal');
-Route::get('/submitsuccess', 'FrontendController@submitSuccess')->name('submitsuccess');
 
 //Route::get('macros', 'FrontendController@macros')->name('macros');
 
