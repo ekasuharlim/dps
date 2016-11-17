@@ -1,3 +1,0 @@
-Test file nih
-$test = "Test string"
-Write-Output $test | Add-Content -LiteralPath \\stsgapp00134\Test\Test.txt

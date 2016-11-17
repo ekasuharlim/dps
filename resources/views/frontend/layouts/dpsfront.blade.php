@@ -37,6 +37,9 @@
 			  <a href="/" >
 					<img src="{{ URL::asset('img/logo.png') }}" height="120"/>
 			  </a>			  
+            <div class="navbar-buttons">
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle navbar-btn">Menu<i class="fa fa-align-justify"></i></button>
+            </div>			  
           </div>
           <div id="navigation" class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
