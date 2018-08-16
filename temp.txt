@@ -1,0 +1,82 @@
+param(
+[string]$source
+,[string]$environmentName
+,[string]$dacpac
+,[string]$package
+,[string]$deployReportArchive
+)
+
+#Create publish file by replacing variable in Publish_Template.xml
+
+$scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
+$path = (Get-Item -Path $scriptPath -Verbose).Parent.FullName
+
+RoboCopy "$path\Publish_Profiles" "$path" /MOV
+
+$enviFile = "$path\Environment_Config.txt" 
+$enviFile = $enviFile -replace "Environment", $environmentName
+
+$arr = Get-Content $enviFile
+
+$file = Get-Content $path\Publish_Template.xml 
+
+#Search and replace ConfigTemplate with setting on enviFile
+foreach($a in $arr){
+	$hash = $a | ConvertFrom-StringData 
+	foreach($k in $hash.Keys){	
+		for ($i=0; $i -lt $file.length; $i++) {
+			$f = $file[$i]
+			$file[$i] = $file[$i] -replace $k,$hash.Item($k)
+		}	
+	}
+}
+
+Set-Content -Path $path\PublishProfile.xml -value $file
+
+$publishFile = "$path\PublishProfile.xml"
+
+$dateTime = Get-Date -Format yyyy-MM-dd_hh-mm-ss
+#Surround the path with quotes to prevent folders with spaces causing a problem
+$outputPath = """$deployReportArchive\DeployReport_$dateTime.xml"""
+
+# Log what will be deployed
+$reportInfo = New-Object System.Diagnostics.ProcessStartInfo 
+$reportInfo.FileName = $package 
+$reportInfo.RedirectStandardError = $true 
+$reportInfo.RedirectStandardOutput = $true 
+$reportInfo.UseShellExecute = $false 
+$reportInfo.Arguments = "/Action:DeployReport /SourceFile:$dacpac /Profile:$publishFile /OutputPath:$outputPath /OverwriteFiles:True"
+$report = New-Object System.Diagnostics.Process 
+$report.StartInfo = $reportInfo 
+$report.Start() | Out-Null 
+$report.WaitForExit() 
+$outputReport = $report.StandardOutput.ReadToEnd() 
+$errorReport = $report.StandardError.ReadToEnd()
+
+if($report.ExitCode -eq 1)
+{
+	throw "A Deployment Error Occurred. $errorReport"
+} else {
+	Write-Output "$outputReport"
+}
+
+# Run deploy
+$deployInfo = New-Object System.Diagnostics.ProcessStartInfo 
+$deployInfo.FileName = $package 
+$deployInfo.RedirectStandardError = $true 
+$deployInfo.RedirectStandardOutput = $true 
+$deployInfo.UseShellExecute = $false 
+$deployInfo.Arguments = "/Action:Publish /SourceFile:$dacpac /Profile:$publishFile"
+$deploy = New-Object System.Diagnostics.Process 
+$deploy.StartInfo = $deployInfo 
+$deploy.Start() | Out-Null 
+$deploy.WaitForExit() 
+$outputDeploy = $deploy.StandardOutput.ReadToEnd() 
+$errorDeploy = $deploy.StandardError.ReadToEnd()
+
+if($deploy.ExitCode -eq 1)
+{
+	throw "A Deployment Error Occurred. $errorDeploy"
+} else {
+	Write-Output "$outputDeploy"
+}
